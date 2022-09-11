@@ -2,13 +2,14 @@
 
 ## Features
 
-- Plugin Container in dev server
-  - Support Rollup plugin
-  - Support Vite plugin
-
-- Support .ts config file
-    - Read ENV file
-
+- Same file name and dir name with Vite
 - Pre build
 - HMR
-- Build with Rollup
+- Support .ts config file
+- Read ENV file
+
+
+## Usage
+
+```
+```

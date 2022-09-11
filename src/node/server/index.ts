@@ -3,30 +3,44 @@ import colors from 'picocolors'
 import { resolveHttpServer } from '../http';
 import http from 'node:http'
 import { createPluginContainer } from "./PluginContainer";
+import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
+import { Plugin } from '../plugin';
 
-
-interface ViteDevServer {
+export interface ViteDevServer {
+    config: {
+        root: string;
+        plugins: Plugin[]
+    },
     pluginContainer: ReturnType<typeof createPluginContainer>
+    transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
     middlewares: connect.Server,
     httpServer: http.Server
-
 }
 
 export async function createServer() {
     const pluginContainer = createPluginContainer([])
     const middlewares = connect()
-
     const httpServer = resolveHttpServer(middlewares)
 
     const server: ViteDevServer = {
+        config: {
+            root: '/',
+            plugins: []
+        },
         middlewares,
         httpServer,
+        transformIndexHtml: null!,
         pluginContainer,
         async listen(port?: number) {
             await startServer(server, port)
         }
     }
+
+    server.transformIndexHtml = createDevHtmlTransformFn(server)
+
+    // middleware to process index.html
+    server.middlewares.use(indexHtmlMiddleware)
 
     return server;
 }
@@ -38,10 +52,11 @@ function startServer(server: ViteDevServer, inlinePort?: number) {
     const start = performance.now()
     server.httpServer.listen(port, hostname)
     const end = performance.now()
+
     const url = `http://${hostname}:${port}/`
     const colorUrl = (url: string) =>
         colors.cyan(url.replace(/:(\d+)\//, (_, port) => `:${colors.bold(port)}/`));
 
     console.info(`\n${colors.green("VITE")}  ready in ${(end - start).toFixed(0)} ms`)
-    console.info(`  ${colors.green('➜')}  ${colors.bold('Network')}: ${colorUrl(url)}\n`)
+    console.info(`\n   ${colors.green('➜')}  ${colors.bold('Network')}: ${colorUrl(url)}\n`)
 }
