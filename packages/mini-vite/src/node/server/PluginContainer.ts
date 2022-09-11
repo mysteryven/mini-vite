@@ -50,7 +50,6 @@ export async function createPluginContainer(plugins: Plugin[]) {
         }
     }
 
-
     const container: PluginContainer = {
         async resolveId(rawId) {
             const ctx = new Context()

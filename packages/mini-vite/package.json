@@ -1,0 +1,31 @@
+{
+  "name": "mini-vite",
+  "version": "1.0.0",
+  "description": "A mini vite",
+  "main": "index.js",
+  "scripts": {
+    "build:watch": "tsup --watch"
+  },
+  "bin": {
+    "mini-vite": "bin/vite.js"
+  },
+  "keywords": ["vite", "hmr", "build-tool"],
+  "author": "mysteryven",
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.15.7",
+    "rollup": "^2.79.0"
+  },
+  "devDependencies": {
+    "cac": "^6.7.14",
+    "vitest": "^0.23.2",
+    "debug": "^4.3.4",
+    "@types/debug": "^4.1.7",
+    "@types/node": "^18.7.16",
+    "eslint": "^8.23.0",
+    "connect": "^3.7.0",
+    "@types/connect": "^3.4.35",
+    "tsup": "^6.2.3",
+    "picocolors": "^1.0.0"
+  }
+}

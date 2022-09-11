@@ -8,7 +8,7 @@ import { Plugin } from '../plugin';
 
 export interface ViteDevServer {
     config: {
-        root: string;
+        root: string,
         plugins: Plugin[]
     },
     pluginContainer: ReturnType<typeof createPluginContainer>
@@ -25,7 +25,7 @@ export async function createServer() {
 
     const server: ViteDevServer = {
         config: {
-            root: '/',
+            root: process.cwd(), 
             plugins: []
         },
         middlewares,
@@ -39,8 +39,9 @@ export async function createServer() {
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)
 
-    // middleware to process index.html
-    server.middlewares.use(indexHtmlMiddleware)
+    // A middleware to process index.html
+    // transformIndexHtml will be trigger here
+    server.middlewares.use(indexHtmlMiddleware(server))
 
     return server;
 }
