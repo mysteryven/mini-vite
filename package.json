@@ -4,7 +4,7 @@
   "description": "A mini vite",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:watch": "tsup --watch"
   },
   "keywords": ["vite", "hmr", "build-tool"],
   "author": "mysteryven",
@@ -18,6 +18,10 @@
     "vitest": "^0.23.2",
     "debug": "^4.3.4",
     "@types/node": "^18.7.16",
-    "eslint": "^8.23.0"
+    "eslint": "^8.23.0",
+    "connect": "^3.7.0",
+    "@types/connect": "^3.4.35",
+    "tsup": "^6.2.3",
+    "picocolors": "^1.0.0"
   }
 }
