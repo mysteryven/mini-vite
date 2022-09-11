@@ -2,16 +2,17 @@ import connect from 'connect'
 import colors from 'picocolors'
 import { resolveHttpServer } from '../http';
 import http from 'node:http'
-import { createPluginContainer } from "./PluginContainer";
+import { createPluginContainer, PluginContainer } from "./PluginContainer";
 import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
 import { Plugin } from '../plugin';
+import { transformMiddleware } from './middlewares/transform';
 
 export interface ViteDevServer {
     config: {
         root: string,
         plugins: Plugin[]
     },
-    pluginContainer: ReturnType<typeof createPluginContainer>
+    pluginContainer: PluginContainer 
     transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
     middlewares: connect.Server,
@@ -39,8 +40,15 @@ export async function createServer() {
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)
 
-    // A middleware to process index.html
-    // transformIndexHtml will be trigger here
+    // The main middleware for request, 
+    // We will use this middleware to process JS/TS/CSS etc.
+    // For example, The request of /main/index.ts will be processed here.
+    middlewares.use(transformMiddleware(server))
+
+
+    // The internal middleware to process index.html
+    // transformIndexHtml hook will be called in this middleware
+    // and configureServer hook will be called before this middleware
     server.middlewares.use(indexHtmlMiddleware(server))
 
     return server;

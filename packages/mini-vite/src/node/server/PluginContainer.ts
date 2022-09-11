@@ -24,16 +24,10 @@ export type PluginContext = Omit<
     | 'load'
 >
 
-export interface SourceDescription {
-    code: string;
-}
-
-type LoadResult = SourceDescription | string | null | void;
-
-interface PluginContainer {
+export interface PluginContainer {
     resolveId(id: string): Promise<PartialResolvedId | null>;
-    transform(code: string, id: string): Promise<SourceDescription | null>;
-    load(id: string): Promise<LoadResult | null>;
+    transform(code: string, id: string): Promise<string | null>;
+    load(id: string): Promise<string | null>;
     close(): Promise<void>;
 }
 
@@ -111,12 +105,12 @@ export async function createPluginContainer(plugins: Plugin[]) {
                 code = result.code
             }
 
-            return {
-                code
-            }
+            return code
         },
         async close() {
             console.log("waiting to implement")
         }
     }
+
+    return container
 }

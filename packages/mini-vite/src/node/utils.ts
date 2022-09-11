@@ -16,3 +16,14 @@ export function normalizePath(id: string): string {
 export function isObject(value: unknown): value is Record<string, any> {
     return Object.prototype.toString.call(value) === '[object Object]'
 }
+
+const knownJsSrcRE = /\.((j|t)sx?)($|\?)/
+export function isJSRequest(url: string) {
+    if (knownJsSrcRE.test(url)) {
+      return true
+    }
+    if (!path.extname(url) && !url.endsWith('/')) {
+      return true
+    }
+    return false 
+}

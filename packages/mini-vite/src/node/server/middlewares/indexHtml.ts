@@ -39,6 +39,7 @@ export function indexHtmlMiddleware(
     }
 }
 
+// only retain logic of run hooks
 export function createDevHtmlTransformFn(server: ViteDevServer) {
     return async (url: string, html: string, originUrl?: string) => {
         const plugins = server.config.plugins
