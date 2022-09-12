@@ -1,9 +1,9 @@
-import { assert } from "node:console"
 import path from "node:path"
 import { Plugin } from "./plugin"
 import { assetPlugin } from "./plugins/asserts"
 import { cssPostPlugin } from "./plugins/css"
 import { esbuildPlugin } from "./plugins/esbuild"
+import { importAnalysisPlugin } from "./plugins/importAnalysis"
 import { resolvePlugin } from "./plugins/resolve"
 
 export interface ResolvedConfig {
@@ -23,7 +23,8 @@ export async function resolveConfig(): Promise<ResolvedConfig> {
         assetPlugin(config),
         resolvePlugin(config),
         esbuildPlugin(),
-        cssPostPlugin(config)
+        importAnalysisPlugin(),
+        cssPostPlugin()
     ]
 
     return config

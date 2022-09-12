@@ -1,8 +1,7 @@
-import { ResolvedConfig } from "../config";
 import { Plugin } from "../plugin";
 import { isCSSRequest } from "../utils";
 
-export function cssPostPlugin(config: ResolvedConfig): Plugin {
+export function cssPostPlugin(): Plugin {
 
     return {
         name: 'vite:css-post',

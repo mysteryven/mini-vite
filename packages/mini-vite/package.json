@@ -28,6 +28,7 @@
     "@types/connect": "^3.4.35",
     "tsup": "^6.2.3",
     "picocolors": "^1.0.0",
-    "sirv": "^2.0.2"
+    "sirv": "^2.0.2",
+    "es-module-lexer": "^1.0.3"
   }
 }

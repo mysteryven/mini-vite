@@ -19,7 +19,8 @@ export function esbuildPlugin(): Plugin {
 
             const result = await transform(code, {
                 loader,
-                target: "esnext"
+                target: "esnext",
+                format: "esm"
             })
 
             return result.code

@@ -1,29 +1,13 @@
-import { PluginContext as RollupPluginContext } from 'rollup'
 import { ResolvedConfig } from '../config';
-import { Plugin } from '../plugin'
 import { createPluginHookUtils } from '../plugins';
-import { isExternalUrl, normalizePath } from '../utils';
-
-interface PartialResolvedId {
-    id: string;
-}
 
 export interface ResolvedId {
     id: string;
 }
 
-export type PluginContext = Omit<
-    RollupPluginContext,
-    | 'cache'
-    | 'emitAsset'
-    | 'emitChunk'
-    | 'getAssetFileName'
-    | 'getChunkFileName'
-    | 'isExternal'
-    | 'moduleIds'
-    | 'resolveId'
-    | 'load'
->
+export type PluginContext = {
+    resolve: (id: string, importer?: string) => Promise<string | null>
+}
 
 export interface PluginContainer {
     resolveId(id: string, importer?: string): Promise<string | null>;
@@ -39,7 +23,7 @@ export async function createPluginContainer(config: ResolvedConfig) {
     class Context {
         async resolve(id: string, importer?: string) {
             let out = await container.resolveId(id, importer)
-            return out 
+            return out
         }
     }
 
