@@ -1,4 +1,5 @@
 import { Plugin } from "./plugin"
+import { cssPostPlugin } from "./plugins/css"
 import { esbuildPlugin } from "./plugins/esbuild"
 import { resolvePlugin } from "./plugins/resolve"
 
@@ -15,7 +16,8 @@ export async function resolveConfig(): Promise<ResolvedConfig> {
 
     config.plugins = [
         resolvePlugin(config),
-        esbuildPlugin()
+        esbuildPlugin(),
+        cssPostPlugin()
     ]
 
     return config

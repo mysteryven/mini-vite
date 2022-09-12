@@ -39,7 +39,6 @@ async function doTransform(
     }
 
     const transformResult = await pluginContainer.transform(code, id)
-    debug(transformResult)
 
     return transformResult
 }

@@ -1,5 +1,5 @@
 import connect from 'connect'
-import { isJSRequest } from '../../utils';
+import { isCSSRequest, isJSRequest } from '../../utils';
 import { ViteDevServer } from '../index';
 import { transformRequest } from '../transformRequest';
 import createDebug from 'debug'
@@ -17,7 +17,10 @@ export function transformMiddleware(
         let url = req.url!;
 
         debug(url)
-        if (isJSRequest(url)) {
+        if (
+            isJSRequest(url) ||
+            isCSSRequest(url)
+        ) {
             const result = await transformRequest(url, server, debug)
             if (result) {
                 res.statusCode = 200;

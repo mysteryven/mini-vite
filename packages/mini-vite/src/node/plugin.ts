@@ -4,6 +4,6 @@ export interface Plugin {
     enforce?: 'pre' | 'post'
     resolveId?: (id: string, importer?: string) => Promise<string | null>
     load?: (id: string) => Promise<string>    
-    transform?: (code: string, id: string) => Promise<string>
+    transform?: (code: string, id: string) => Promise<string | null>
     transformIndexHtml?: (this: void, html: string) => string
 }

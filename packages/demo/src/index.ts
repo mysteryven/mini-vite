@@ -1,4 +1,3 @@
-
 const render = () => {
     const root = document.querySelector('#root')!
 
