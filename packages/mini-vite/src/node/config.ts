@@ -1,6 +1,6 @@
 import path from "node:path"
 import { Plugin } from "./plugin"
-import { assetPlugin } from "./plugins/asserts"
+import { assetPlugin } from "./plugins/assets"
 import { cssPostPlugin } from "./plugins/css"
 import { esbuildPlugin } from "./plugins/esbuild"
 import { importAnalysisPlugin } from "./plugins/importAnalysis"

@@ -35,7 +35,8 @@ export function assetPlugin(config: ResolvedConfig): Plugin {
                 return null
             }
 
-            return `export default ${JSON.stringify(id)}`
+            const url = path.posix.relative(config.root, id)
+            return `export default ${JSON.stringify(url)}`
         }
     }
 }

@@ -1,5 +1,5 @@
 import connect from 'connect'
-import { isCSSRequest, isJSRequest } from '../../utils';
+import { isCSSRequest, isImportRequest, isJSRequest, removeImportQuery } from '../../utils';
 import { ViteDevServer } from '../index';
 import { transformRequest } from '../transformRequest';
 import createDebug from 'debug'
@@ -19,8 +19,11 @@ export function transformMiddleware(
         debug(url)
         if (
             isJSRequest(url) ||
-            isCSSRequest(url)
+            isCSSRequest(url) ||
+            isImportRequest(url)
         ) {
+            // assets will be add postfix '?import' in vite:import-analysis. 
+            url = removeImportQuery(url)
             const result = await transformRequest(url, server, debug)
             if (result) {
                 res.statusCode = 200;

@@ -59,4 +59,9 @@ export const cleanUrl = (url: string): string =>
 
 
 const importQueryRE = /(\?|&)import=?(?:&|$)/
+const trailingSeparatorRE = /[\?&]$/
 export const isImportRequest = (url: string): boolean => importQueryRE.test(url)
+
+export function removeImportQuery(url: string): string {
+  return url.replace(importQueryRE, '$1').replace(trailingSeparatorRE, '')
+}
