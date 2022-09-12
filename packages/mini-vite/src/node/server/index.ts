@@ -6,6 +6,7 @@ import { createPluginContainer, PluginContainer } from "./PluginContainer";
 import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
 import { Plugin } from '../plugin';
 import { transformMiddleware } from './middlewares/transform';
+import { resolveConfig } from '../config';
 
 export interface ViteDevServer {
     config: {
@@ -20,7 +21,8 @@ export interface ViteDevServer {
 }
 
 export async function createServer() {
-    const pluginContainer = createPluginContainer([])
+    const config = await resolveConfig()
+    const pluginContainer = await createPluginContainer([])
     const middlewares = connect()
     const httpServer = resolveHttpServer(middlewares)
 

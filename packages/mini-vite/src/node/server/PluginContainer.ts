@@ -25,7 +25,7 @@ export type PluginContext = Omit<
 >
 
 export interface PluginContainer {
-    resolveId(id: string): Promise<PartialResolvedId | null>;
+    resolveId(id: string, importer?: string): Promise<string | null>;
     transform(code: string, id: string): Promise<string | null>;
     load(id: string): Promise<string | null>;
     close(): Promise<void>;
@@ -36,26 +36,23 @@ export async function createPluginContainer(plugins: Plugin[]) {
     const { getSortedPlugins } = createPluginHookUtils(plugins)
 
     class Context {
-        async resolve(id: string) {
-
-            let out = await container.resolveId(id)
-            if (typeof out === 'string') out = { id: out }
-            return out as ResolvedId | null
+        async resolve(id: string, importer?: string) {
+            let out = await container.resolveId(id, importer)
+            return out 
         }
     }
 
     const container: PluginContainer = {
-        async resolveId(rawId) {
+        async resolveId(rawId, importer) {
             const ctx = new Context()
             let id: string | null = null
 
-            const partial: Partial<PartialResolvedId> = {}
             for (let plugin of getSortedPlugins('resolveId')) {
                 if (!plugin.resolveId) {
                     continue
                 }
                 const handler = plugin.resolveId
-                const result = await handler.call(ctx, rawId)
+                const result = await handler.call(ctx, rawId, importer)
 
                 if (!result) {
                     continue
@@ -67,8 +64,7 @@ export async function createPluginContainer(plugins: Plugin[]) {
             }
 
             if (id) {
-                partial.id = isExternalUrl(id) ? id : normalizePath(id)
-                return partial as PartialResolvedId
+                return id
             } else {
                 return null
             }
