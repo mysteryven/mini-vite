@@ -50,3 +50,13 @@ const InternalPrefixRE = new RegExp(`^(?:${internalPrefixes.join('|')})`)
 
 export const isInternalRequest = (url: string): boolean =>
   InternalPrefixRE.test(url)
+
+export const queryRE = /\?.*$/s
+export const hashRE = /#.*$/s
+
+export const cleanUrl = (url: string): string =>
+  url.replace(hashRE, '').replace(queryRE, '')
+
+
+const importQueryRE = /(\?|&)import=?(?:&|$)/
+export const isImportRequest = (url: string): boolean => importQueryRE.test(url)

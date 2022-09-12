@@ -6,7 +6,7 @@ import { createPluginContainer, PluginContainer } from "./PluginContainer";
 import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
 import { transformMiddleware } from './middlewares/transform';
 import { resolveConfig, ResolvedConfig } from '../config';
-import { serveStaticMiddleware } from './middlewares/static';
+import { servePublicMiddleware, serveStaticMiddleware } from './middlewares/static';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
@@ -35,6 +35,14 @@ export async function createServer() {
     }
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)
+
+    // Serve for public directory.
+    // If we have import like `import a from '../public/vite.svg'` in JS file.
+    // First, it will be processed in `transformMiddleware`, and `a` is the path of vite.svg.
+    // When use `a` such as <img src="a">, this request will be process by `servePublicMiddleware`
+    middlewares.use(
+        servePublicMiddleware(config.publicDir)
+    )
 
     // The main middleware for request, 
     // We will use this middleware to process JS/TS/CSS etc.

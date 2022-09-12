@@ -4,7 +4,7 @@
 
 - [x] Same file/directory/function name with Vite
 - [x] Support to load JS/TS/JSX/TSX/CSS files
-- [ ] Support to load Static file in public directory
+- [ ] Support to load Static file
 - [ ] Pre build
 - [ ] HMR
 - [ ] Support to load local config file
