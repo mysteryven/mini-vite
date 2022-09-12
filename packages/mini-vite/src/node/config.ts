@@ -17,7 +17,7 @@ export async function resolveConfig(): Promise<ResolvedConfig> {
     config.plugins = [
         resolvePlugin(config),
         esbuildPlugin(),
-        cssPostPlugin()
+        cssPostPlugin(config)
     ]
 
     return config

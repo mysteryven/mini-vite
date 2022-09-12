@@ -11,14 +11,14 @@ export function cssPostPlugin(config: ResolvedConfig): Plugin {
                 return null
             }
 
-            const result = `
-            style = document.createElement('style')
-            style.setAttribute('type', 'text/css')
-            style.innerHTML = \`${code}\`
-            document.head.appendChild(style)
-            `
+            const result = [
+                `const style = document.createElement('style')`,
+                `style.setAttribute('type', 'text/css')`,
+                `style.innerHTML = ${JSON.stringify(code)}`,
+                `document.head.appendChild(style)`
+            ]
 
-            return result
+            return result.join('\n')
         }
     }
 }
