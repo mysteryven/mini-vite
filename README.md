@@ -5,13 +5,13 @@
 ## Features
 
 - [x] Same file/directory/function name with Vite
-- [x] Support to load JS/TS/JSX/TSX/CSS files
-- [x] Support to import/load static file
-- [x] Support load files from public path use just like `/vite.svg`.
-- [ ] Pre build
-- [ ] HMR
-- [ ] Support to load local config file
-- [ ] Support to read ENV
+- [x] Load JS/TS/JSX/TSX/CSS files
+- [x] Import/Load static file(eg. png, jpeg)
+- [x] Load files from public path use just like `/vite.svg` directly.
+- [ ] Dependency Pre-Bundling 
+- [ ] Hot Module Replacement
+- [ ] Load local config file
+- [ ] Read ENV from `.env.*`
 
 I will finish this rest of features soon.   
 
@@ -25,7 +25,7 @@ cd packages/mini-vite && pnpm build
 cd packages/demo && pnpm dev
 ```
 
-## Work in local
+## Run in local
 
 ```bash
 cd packages/mini-vite && pnpm build:watch
