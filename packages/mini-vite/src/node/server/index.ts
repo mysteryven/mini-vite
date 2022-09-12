@@ -6,10 +6,11 @@ import { createPluginContainer, PluginContainer } from "./PluginContainer";
 import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
 import { transformMiddleware } from './middlewares/transform';
 import { resolveConfig, ResolvedConfig } from '../config';
+import { serveStaticMiddleware } from './middlewares/static';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
-    pluginContainer: PluginContainer 
+    pluginContainer: PluginContainer
     transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
     middlewares: connect.Server,
@@ -40,6 +41,8 @@ export async function createServer() {
     // For example, The request of /main/index.ts will be processed here.
     middlewares.use(transformMiddleware(server))
 
+    // To serve static files, such as /public/vite.svg
+    middlewares.use(serveStaticMiddleware(server.config.root))
 
     // The internal middleware to process index.html
     // transformIndexHtml hook will be called in this middleware
