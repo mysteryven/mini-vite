@@ -2,6 +2,8 @@ import connect from 'connect'
 import { isJSRequest } from '../../utils';
 import { ViteDevServer } from '../index';
 import { transformRequest } from '../transformRequest';
+import createDebug from 'debug'
+const debug = createDebug('mini-vite:transform')
 
 const knownIgnoreList = new Set(['/', '/favicon.ico'])
 
@@ -14,8 +16,9 @@ export function transformMiddleware(
         }
         let url = req.url!;
 
+        debug(url)
         if (isJSRequest(url)) {
-            const result = await transformRequest(url, server)
+            const result = await transformRequest(url, server, debug)
             if (result) {
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/javascript");

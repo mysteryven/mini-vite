@@ -18,7 +18,7 @@ export interface ViteDevServer {
 
 export async function createServer() {
     const config = await resolveConfig()
-    const pluginContainer = await createPluginContainer([])
+    const pluginContainer = await createPluginContainer(config)
     const middlewares = connect()
     const httpServer = resolveHttpServer(middlewares)
 

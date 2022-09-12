@@ -1,4 +1,5 @@
 import { PluginContext as RollupPluginContext } from 'rollup'
+import { ResolvedConfig } from '../config';
 import { Plugin } from '../plugin'
 import { createPluginHookUtils } from '../plugins';
 import { isExternalUrl, normalizePath } from '../utils';
@@ -31,9 +32,9 @@ export interface PluginContainer {
     close(): Promise<void>;
 }
 
-export async function createPluginContainer(plugins: Plugin[]) {
+export async function createPluginContainer(config: ResolvedConfig) {
 
-    const { getSortedPlugins } = createPluginHookUtils(plugins)
+    const { getSortedPlugins } = createPluginHookUtils(config.plugins)
 
     class Context {
         async resolve(id: string, importer?: string) {
@@ -98,7 +99,7 @@ export async function createPluginContainer(plugins: Plugin[]) {
                     continue
                 }
 
-                code = result.code
+                code = result
             }
 
             return code
