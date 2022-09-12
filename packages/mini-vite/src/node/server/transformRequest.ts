@@ -1,4 +1,5 @@
-import { ViteDevServer } from ".";
+import fs from 'fs/promises'
+import { ViteDevServer } from "./index";
 import { isObject } from "../utils";
 
 export function transformRequest(
@@ -17,15 +18,16 @@ async function doTransform(
 ): Promise<string | null> {
     const { pluginContainer } = server
 
-    const id = (await pluginContainer.resolveId(url))?.id || url
+    const id = (await pluginContainer.resolveId(url)) || url
 
     const loadResult = await pluginContainer.load(id)
     let code: string | null;
 
-    if (isObject(loadResult)) {
-        code = loadResult.code
+    // fallback for load hook
+    if (!loadResult) {
+        code = await fs.readFile(id, 'utf-8')
     } else {
-        code = loadResult || null
+        code = loadResult
     }
 
     if (code === null) {

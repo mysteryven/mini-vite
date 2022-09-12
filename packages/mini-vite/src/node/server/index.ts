@@ -4,15 +4,11 @@ import { resolveHttpServer } from '../http';
 import http from 'node:http'
 import { createPluginContainer, PluginContainer } from "./PluginContainer";
 import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/indexHtml';
-import { Plugin } from '../plugin';
 import { transformMiddleware } from './middlewares/transform';
-import { resolveConfig } from '../config';
+import { resolveConfig, ResolvedConfig } from '../config';
 
 export interface ViteDevServer {
-    config: {
-        root: string,
-        plugins: Plugin[]
-    },
+    config: ResolvedConfig,
     pluginContainer: PluginContainer 
     transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
@@ -27,10 +23,7 @@ export async function createServer() {
     const httpServer = resolveHttpServer(middlewares)
 
     const server: ViteDevServer = {
-        config: {
-            root: process.cwd(), 
-            plugins: []
-        },
+        config,
         middlewares,
         httpServer,
         transformIndexHtml: null!,

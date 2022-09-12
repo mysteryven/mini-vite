@@ -1,4 +1,6 @@
 import { Plugin } from "./plugin"
+import { esbuildPlugin } from "./plugins/esbuild"
+import { resolvePlugin } from "./plugins/resolve"
 
 export interface ResolvedConfig {
     root: string
@@ -6,11 +8,15 @@ export interface ResolvedConfig {
 }
 
 export async function resolveConfig(): Promise<ResolvedConfig> {
-
-    return {
+    const config: ResolvedConfig = {
         root: process.cwd(),
-        plugins: [
-            
-        ]
+        plugins: []
     }
+
+    config.plugins = [
+        resolvePlugin(config),
+        esbuildPlugin()
+    ]
+
+    return config
 }
