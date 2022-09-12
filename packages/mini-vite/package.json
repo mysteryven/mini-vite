@@ -4,6 +4,7 @@
   "description": "A mini vite",
   "main": "index.js",
   "scripts": {
+    "build": "tsup",
     "build:watch": "tsup --watch"
   },
   "bin": {
