@@ -4,14 +4,13 @@
 
 ## Features
 
-- [x] Same file/directory/function name with Vite
-- [x] Load JS/TS/JSX/TSX/CSS files
-- [x] Import/Load static file(eg. png, jpeg)
-- [x] Load files from public path use just like `/vite.svg` directly.
-- [ ] Dependency Pre-Bundling 
-- [ ] Hot Module Replacement
-- [ ] Load local config file
-- [ ] Read ENV from `.env.*`
+- [x] Same structure with Vite.
+- [x] Support JS, TS, JSX, TSX, CSS, static files.
+- [x] Support `public` as public directory.
+- [ ] Dependency Pre-Bundling.
+- [ ] Hot Module Replacement.
+- [ ] Load local config file.
+- [ ] Read ENV from `.env.*`.
 
 I will finish this rest of features soon.   
 
