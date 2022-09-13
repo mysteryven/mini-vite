@@ -1,8 +1,11 @@
 import type { Plugin } from 'esbuild'
 import { init, parse } from 'es-module-lexer'
 import fs from 'node:fs/promises'
-import resolve from 'resolve'
+import * as resolve from 'resolve';
+import createDebug from 'debug'
 import { ResolvedConfig } from '../config'
+
+const debug = createDebug('mini-vite:esbuildDepPlugin')
 
 export function esbuildDepPlugin(
     deps: Record<string, string>,
@@ -14,11 +17,11 @@ export function esbuildDepPlugin(
         setup(build) {
             build.onResolve(
                 { filter: /^[\w@][^:]/ },
-                async ({ path: id, importer, kind }) => {
+                async ({ path: id, importer }) => {
                     if (!importer) {
                         return {
                             path: resolve.sync(id, { basedir: config.root }),
-                            namespace: 'deps'
+                            namespace: 'dep'
                         }
                     }
 
@@ -31,7 +34,10 @@ export function esbuildDepPlugin(
             build.onLoad(
                 { filter: /.*/, namespace: 'dep' },
                 async ({ path: id }) => {
+                    
+                    debug(id)
                     await init;
+
                     const entryContent = await fs.readFile(id, {
                         encoding: 'utf-8'
                     });

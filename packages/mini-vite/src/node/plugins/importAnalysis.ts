@@ -36,9 +36,6 @@ export function importAnalysisPlugin(): Plugin {
                     const resolved = await this.resolve(specifier, importer)
                     debug(specifier, resolved)
                     if (resolved) {
-                        console.log('---')
-                        console.log(resolved, markExplicitImport(resolved))
-                        console.log('---')
                         s.overwrite(start, end, markExplicitImport(resolved))
                     }
                 }

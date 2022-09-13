@@ -32,8 +32,8 @@ export async function createServer() {
         pluginContainer,
         async listen(port?: number) {
             // Entry of pre-bundling
-            // await initDepsOptimizer(config, server)
-            await startServer(server, port)
+            await initDepsOptimizer(config)
+            // await startServer(server, port)
         }
     }
 
