@@ -7,6 +7,7 @@ import { createDevHtmlTransformFn, indexHtmlMiddleware } from './middlewares/ind
 import { transformMiddleware } from './middlewares/transform';
 import { resolveConfig, ResolvedConfig } from '../config';
 import { servePublicMiddleware, serveStaticMiddleware } from './middlewares/static';
+import { initDepsOptimizer } from '../optimizer/optimizer';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
@@ -27,9 +28,12 @@ export async function createServer() {
         config,
         middlewares,
         httpServer,
-        transformIndexHtml: null!,
+        transformIndexHtml: null!, // be set soon
         pluginContainer,
         async listen(port?: number) {
+            // Entry of pre-bundling
+            await initDepsOptimizer(config, server)
+            return;
             await startServer(server, port)
         }
     }

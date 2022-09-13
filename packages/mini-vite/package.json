@@ -10,25 +10,31 @@
   "bin": {
     "mini-vite": "bin/vite.js"
   },
-  "keywords": ["vite", "hmr", "build-tool"],
+  "keywords": [
+    "vite",
+    "hmr",
+    "build-tool"
+  ],
   "author": "mysteryven",
   "license": "MIT",
   "dependencies": {
+    "@types/resolve": "^1.20.2",
     "esbuild": "^0.15.7",
     "rollup": "^2.79.0"
   },
   "devDependencies": {
-    "cac": "^6.7.14",
-    "vitest": "^0.23.2",
-    "debug": "^4.3.4",
+    "@types/connect": "^3.4.35",
     "@types/debug": "^4.1.7",
     "@types/node": "^18.7.16",
-    "eslint": "^8.23.0",
+    "cac": "^6.7.14",
     "connect": "^3.7.0",
-    "@types/connect": "^3.4.35",
-    "tsup": "^6.2.3",
+    "debug": "^4.3.4",
+    "es-module-lexer": "^1.0.3",
+    "eslint": "^8.23.0",
     "picocolors": "^1.0.0",
+    "resolve": "^2.0.0-next.4",
     "sirv": "^2.0.2",
-    "es-module-lexer": "^1.0.3"
+    "tsup": "^6.2.3",
+    "vitest": "^0.23.2"
   }
 }

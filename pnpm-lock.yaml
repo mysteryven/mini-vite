@@ -29,17 +29,21 @@ importers:
       '@types/connect': ^3.4.35
       '@types/debug': ^4.1.7
       '@types/node': ^18.7.16
+      '@types/resolve': ^1.20.2
       cac: ^6.7.14
       connect: ^3.7.0
       debug: ^4.3.4
+      es-module-lexer: ^1.0.3
       esbuild: ^0.15.7
       eslint: ^8.23.0
       picocolors: ^1.0.0
+      resolve: ^2.0.0-next.4
       rollup: ^2.79.0
       sirv: ^2.0.2
       tsup: ^6.2.3
       vitest: ^0.23.2
     dependencies:
+      '@types/resolve': 1.20.2
       esbuild: 0.15.7
       rollup: 2.79.0
     devDependencies:
@@ -49,8 +53,10 @@ importers:
       cac: 6.7.14
       connect: 3.7.0
       debug: 4.3.4
+      es-module-lexer: 1.0.3
       eslint: 8.23.0
       picocolors: 1.0.0
+      resolve: 2.0.0-next.4
       sirv: 2.0.2
       tsup: 6.2.3
       vitest: 0.23.2
@@ -484,6 +490,10 @@ packages:
       csstype: 3.1.0
     dev: true
 
+  /@types/resolve/1.20.2:
+    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
+    dev: false
+
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
@@ -799,6 +809,10 @@ packages:
   /encodeurl/1.0.2:
     resolution: {integrity: sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /es-module-lexer/1.0.3:
+    resolution: {integrity: sha512-iC67eXHToclrlVhQfpRawDiF8D8sQxNxmbqw5oebegOaJkyx/w9C/k57/5e6yJR2zIByRt9OXdqX50DV2t6ZKw==}
     dev: true
 
   /esbuild-android-64/0.15.7:
@@ -1759,6 +1773,15 @@ packages:
 
   /resolve/1.22.1:
     resolution: {integrity: sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==}
+    hasBin: true
+    dependencies:
+      is-core-module: 2.10.0
+      path-parse: 1.0.7
+      supports-preserve-symlinks-flag: 1.0.0
+    dev: true
+
+  /resolve/2.0.0-next.4:
+    resolution: {integrity: sha512-iMDbmAWtfU+MHpxt/I5iWI7cY6YVEZUQ3MBgPQ++XD1PELuJHIl82xBmObyP2KyQmkNB2dsqF7seoQQiAn5yDQ==}
     hasBin: true
     dependencies:
       is-core-module: 2.10.0

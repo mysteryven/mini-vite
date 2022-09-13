@@ -8,15 +8,23 @@ import { resolvePlugin } from "./plugins/resolve"
 
 export interface ResolvedConfig {
     root: string
-    plugins: Plugin[],
+    plugins: Plugin[]
     publicDir: string
+    cacheDir: string
+    optimizeDeps: {
+        entries: string[]
+    }
 }
 
 export async function resolveConfig(): Promise<ResolvedConfig> {
     const config: ResolvedConfig = {
         root: process.cwd(),
         plugins: [],
-        publicDir: path.join(process.cwd(), 'public')
+        publicDir: path.join(process.cwd(), 'public'),
+        cacheDir: 'node_modules/.vite',
+        optimizeDeps: {
+            entries: ['./src/App.tsx'] // hard code it now.
+        }
     }
 
     config.plugins = [
