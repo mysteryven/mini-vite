@@ -1,8 +1,10 @@
 import { init, parse as parseImports } from 'es-module-lexer'
 import MagicString from 'magic-string';
+import path from 'node:path'
 import { Plugin } from "../plugin";
 import createDebug from 'debug'
-import { cleanUrl, isCSSRequest, isJSRequest } from "../utils";
+import { bareImportRE, cleanUrl, isCSSRequest, isJSRequest } from "../utils";
+import { ResolvedConfig } from '../config';
 const debug = createDebug('mini-vite:import-analysis')
 
 const skipRE = /\.(map|json)($|\?)/
@@ -10,8 +12,13 @@ export const canSkipImportAnalysis = (id: string): boolean =>
     skipRE.test(id);
 
 export function importAnalysisPlugin(): Plugin {
+    let configContext: ResolvedConfig;
+
     return {
         name: 'vite:import-analysis',
+        configResolved(config) {
+            configContext = config;
+        },
         async transform(source, importer) {
             if (canSkipImportAnalysis(importer)) {
                 return null
@@ -32,9 +39,19 @@ export function importAnalysisPlugin(): Plugin {
                     n: specifier
                 } = imports[i];
 
-                if (specifier) {
+                if (!specifier) {
+                    continue
+                }
+
+                if (bareImportRE.test(specifier)) {
+                    debug(path.join(configContext.root, configContext.cacheDir, specifier))
+                    s.overwrite(
+                        start,
+                        end,
+                        path.join(configContext.root, configContext.cacheDir, specifier + '.js') 
+                    )
+                } else if (specifier) {
                     const resolved = await this.resolve(specifier, importer)
-                    debug(specifier, resolved)
                     if (resolved) {
                         s.overwrite(start, end, markExplicitImport(resolved))
                     }

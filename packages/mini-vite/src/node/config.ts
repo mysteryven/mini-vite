@@ -23,7 +23,7 @@ export async function resolveConfig(): Promise<ResolvedConfig> {
         publicDir: path.join(process.cwd(), 'public'),
         cacheDir: 'node_modules/.vite',
         optimizeDeps: {
-            entries: ['./src/App.tsx'] // hard code it now.
+            entries: ['./src/main.tsx'] // hard code it now.
         }
     }
 
@@ -34,6 +34,19 @@ export async function resolveConfig(): Promise<ResolvedConfig> {
         importAnalysisPlugin(),
         cssPostPlugin()
     ]
+
+
+    const configureResolved: Plugin[] = []
+    for (let plugin of config.plugins) {
+        if (plugin['configResolved']) {
+            configureResolved.push(plugin)
+        }
+    }
+    await Promise.all(configureResolved.map(p => {
+        if (p.configResolved) {
+            return p.configResolved(config)
+        }
+    }))
 
     return config
 }

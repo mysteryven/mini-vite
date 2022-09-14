@@ -65,3 +65,5 @@ export const isImportRequest = (url: string): boolean => importQueryRE.test(url)
 export function removeImportQuery(url: string): string {
   return url.replace(importQueryRE, '$1').replace(trailingSeparatorRE, '')
 }
+
+export const bareImportRE = /^[\w@](?!.*:\/\/)/

@@ -33,7 +33,7 @@ export async function createServer() {
         async listen(port?: number) {
             // Entry of pre-bundling
             await initDepsOptimizer(config)
-            // await startServer(server, port)
+            await startServer(server, port)
         }
     }
 

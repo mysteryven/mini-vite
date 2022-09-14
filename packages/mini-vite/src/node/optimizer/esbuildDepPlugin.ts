@@ -18,15 +18,17 @@ export function esbuildDepPlugin(
             build.onResolve(
                 { filter: /^[\w@][^:]/ },
                 async ({ path: id, importer }) => {
-                    if (!importer) {
-                        return {
-                            path: resolve.sync(id, { basedir: config.root }),
-                            namespace: 'dep'
+                    if (deps[id]) {
+                        if (!importer) {
+                            return {
+                                path: resolve.sync(id, { basedir: config.root }),
+                                namespace: 'dep'
+                            }
                         }
-                    }
 
-                    return {
-                        path: resolve.sync(id, { basedir: config.root })
+                        return {
+                            path: resolve.sync(id, { basedir: config.root })
+                        }
                     }
                 }
             )
@@ -34,8 +36,8 @@ export function esbuildDepPlugin(
             build.onLoad(
                 { filter: /.*/, namespace: 'dep' },
                 async ({ path: id }) => {
-                    
-                    debug(id)
+
+                    debug('id: %o', id)
                     await init;
 
                     const entryContent = await fs.readFile(id, {

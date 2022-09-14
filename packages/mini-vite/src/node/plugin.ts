@@ -1,3 +1,4 @@
+import { ResolvedConfig } from "./config"
 import { PluginContext } from "./server/PluginContainer"
 
 export interface Plugin {
@@ -7,4 +8,5 @@ export interface Plugin {
     load?: (id: string) => Promise<string | null>    
     transform?: (this: PluginContext,code: string, id: string) => Promise<string | null>
     transformIndexHtml?: (this: void, html: string) => string
+    configResolved?: (config: ResolvedConfig) => void
 }
