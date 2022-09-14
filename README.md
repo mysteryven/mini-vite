@@ -7,8 +7,8 @@
 - [x] Same structure with Vite.
 - [x] Support JS, TS, JSX, TSX, CSS, static files.
 - [x] Support `public` as public directory.
-- [ ] Dependency Pre-Bundling. (working in progress, 70%)
-- [ ] Hot Module Replacement.
+- [x] Dependency Pre-Bundling. 
+- [ ] Hot Module Replacement. (working in progress)
 - [ ] Load local config file.
 - [ ] Read ENV from `.env.*`.
 
