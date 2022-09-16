@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import { ResolvedConfig } from '../config';
 import { Plugin } from '../plugin'
 
+
 export function resolvePlugin(resolveOptions: ResolvedConfig): Plugin {
     const { root } = resolveOptions
 
