@@ -8,6 +8,7 @@ import { transformMiddleware } from './middlewares/transform';
 import { resolveConfig, ResolvedConfig } from '../config';
 import { servePublicMiddleware, serveStaticMiddleware } from './middlewares/static';
 import { initDepsOptimizer } from '../optimizer/optimizer';
+import { ModuleGraph } from './moduleGraph';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
@@ -15,7 +16,8 @@ export interface ViteDevServer {
     transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
     middlewares: connect.Server,
-    httpServer: http.Server
+    httpServer: http.Server,
+    moduleGraph: ModuleGraph
 }
 
 export async function createServer() {
@@ -34,7 +36,10 @@ export async function createServer() {
             // Entry of pre-bundling
             await initDepsOptimizer(config)
             await startServer(server, port)
-        }
+        },
+        moduleGraph: new ModuleGraph((url) => {
+            return pluginContainer.resolveId(url)
+        })
     }
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)
