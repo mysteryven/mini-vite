@@ -8,6 +8,7 @@ export class ModuleNode {
     importedModules = new Set<ModuleNode>()
     transformResult: string | null = null
     file: string | null = null
+    lastInvalidationTimestamp = 0
 
     constructor(url: string) {
         this.url = url
@@ -66,5 +67,41 @@ export class ModuleGraph {
             this.urlToModuleMap.set(url, mod)
         }
         return mod
+    }
+
+    getModuleById(id: string): ModuleNode | undefined {
+        return this.idToModuleMap.get(id)
+    }
+
+    async updateModuleInfo(
+        mod: ModuleNode,
+        importedModules: Set<string | ModuleNode>
+    ) {
+        const prevImports = mod.importedModules
+        const nextImports = (mod.importedModules = new Set())
+
+        // update import graph
+        for (const imported of importedModules) {
+            const dep =
+                typeof imported === 'string'
+                    ? await this.ensureEntryFromUrl(imported)
+                    : imported
+            dep.importers.add(mod)
+            nextImports.add(dep)
+        }
+        // remove the importer from deps that were imported but no longer are.
+        prevImports.forEach((dep) => {
+            if (!nextImports.has(dep)) {
+                dep.importers.delete(mod)
+            }
+        })
+    }
+
+    invalidateModule(
+        mod: ModuleNode,
+    ): void {
+
+        // Invalidating the transform result is enough to ensure this module is re-processed next time it is requested
+        mod.transformResult = null
     }
 }
