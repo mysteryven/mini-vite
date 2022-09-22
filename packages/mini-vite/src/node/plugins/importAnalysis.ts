@@ -58,6 +58,8 @@ export function importAnalysisPlugin(): Plugin {
                 }
             }
 
+            s.prepend()
+
             return s.toString()
         }
     }

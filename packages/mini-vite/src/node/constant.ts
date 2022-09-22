@@ -12,3 +12,5 @@ export const KNOWN_ASSET_TYPES = [
 export const DEFAULT_ASSETS_RE = new RegExp(
     `\\.(` + KNOWN_ASSET_TYPES.join('|') + `)(\\?.*)?$`
 )
+
+export const CLIENT_PUBLIC_PATH = `/@vite/client`

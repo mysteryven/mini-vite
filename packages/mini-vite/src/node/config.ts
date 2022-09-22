@@ -13,7 +13,7 @@ export interface ResolvedConfig {
     cacheDir: string
     optimizeDeps: {
         entries: string[]
-    }
+    },
 }
 
 export async function resolveConfig(): Promise<ResolvedConfig> {
