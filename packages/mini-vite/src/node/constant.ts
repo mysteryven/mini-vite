@@ -14,3 +14,5 @@ export const DEFAULT_ASSETS_RE = new RegExp(
 )
 
 export const CLIENT_PUBLIC_PATH = `/@vite/client`
+
+export const HMR_PORT = 24678

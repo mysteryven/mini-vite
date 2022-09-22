@@ -30,6 +30,7 @@ importers:
       '@types/debug': ^4.1.7
       '@types/node': ^18.7.16
       '@types/resolve': ^1.20.2
+      '@types/ws': ^8.5.3
       cac: ^6.7.14
       connect: ^3.7.0
       debug: ^4.3.4
@@ -42,6 +43,7 @@ importers:
       sirv: ^2.0.2
       tsup: ^6.2.3
       vitest: ^0.23.2
+      ws: ^8.8.1
     dependencies:
       '@types/resolve': 1.20.2
       esbuild: 0.15.7
@@ -50,6 +52,7 @@ importers:
       '@types/connect': 3.4.35
       '@types/debug': 4.1.7
       '@types/node': 18.7.16
+      '@types/ws': 8.5.3
       cac: 6.7.14
       connect: 3.7.0
       debug: 4.3.4
@@ -60,6 +63,7 @@ importers:
       sirv: 2.0.2
       tsup: 6.2.3
       vitest: 0.23.2
+      ws: 8.8.1
 
 packages:
 
@@ -496,6 +500,12 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
+
+  /@types/ws/8.5.3:
+    resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
+    dependencies:
+      '@types/node': 18.7.16
     dev: true
 
   /@vitejs/plugin-react/2.1.0:
@@ -2186,6 +2196,19 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+    dev: true
+
+  /ws/8.8.1:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
     dev: true
 
   /yaml/1.10.2:

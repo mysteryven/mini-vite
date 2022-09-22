@@ -5,6 +5,7 @@ import { cssPostPlugin } from "./plugins/css"
 import { esbuildPlugin } from "./plugins/esbuild"
 import { importAnalysisPlugin } from "./plugins/importAnalysis"
 import { resolvePlugin } from "./plugins/resolve"
+import { ModuleGraph } from "./server/moduleGraph"
 
 export interface ResolvedConfig {
     root: string
@@ -13,7 +14,7 @@ export interface ResolvedConfig {
     cacheDir: string
     optimizeDeps: {
         entries: string[]
-    },
+    }
 }
 
 export async function resolveConfig(): Promise<ResolvedConfig> {

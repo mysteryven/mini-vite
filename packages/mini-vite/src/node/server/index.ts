@@ -1,4 +1,5 @@
 import connect from 'connect'
+import chokidar, { FSWatcher } from 'chokidar'
 import colors from 'picocolors'
 import { resolveHttpServer } from '../http';
 import http from 'node:http'
@@ -8,6 +9,8 @@ import { transformMiddleware } from './middlewares/transform';
 import { resolveConfig, ResolvedConfig } from '../config';
 import { servePublicMiddleware, serveStaticMiddleware } from './middlewares/static';
 import { initDepsOptimizer } from '../optimizer/optimizer';
+import { ModuleGraph } from './moduleGraph';
+import { createWebSocketServer } from './ws';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
@@ -15,7 +18,10 @@ export interface ViteDevServer {
     transformIndexHtml: (url: string, html: string, originUrl?: string) => Promise<string>
     listen: (port?: number) => Promise<void>
     middlewares: connect.Server,
-    httpServer: http.Server
+    httpServer: http.Server,
+    moduleGraph: ModuleGraph,
+    watcher: FSWatcher,
+    ws: ReturnType<typeof createWebSocketServer>;
 }
 
 export async function createServer() {
@@ -23,6 +29,17 @@ export async function createServer() {
     const pluginContainer = await createPluginContainer(config)
     const middlewares = connect()
     const httpServer = resolveHttpServer(middlewares)
+
+    const watcher = chokidar.watch(
+        config.root,
+        {
+            ignored: [
+                '**/.git/**',
+                '**/node_modules/**',
+            ],
+            ignoreInitial: true,
+        }
+    )
 
     const server: ViteDevServer = {
         config,
@@ -34,7 +51,12 @@ export async function createServer() {
             // Entry of pre-bundling
             await initDepsOptimizer(config)
             await startServer(server, port)
-        }
+        },
+        moduleGraph: new ModuleGraph((url) => {
+            return pluginContainer.resolveId(url)
+        }),
+        watcher,
+        ws: createWebSocketServer()
     }
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)

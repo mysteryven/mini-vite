@@ -31,6 +31,8 @@ export function importAnalysisPlugin(): Plugin {
                 return null
             }
 
+            const { moduleGraph } = configContext
+
             const s = new MagicString(source)
             for (let i = 0; i < imports.length; i++) {
                 const {
@@ -43,19 +45,27 @@ export function importAnalysisPlugin(): Plugin {
                     continue
                 }
 
+                const importerModule = moduleGraph.getModuleById(importer)!
+                const importedUrls = new Set<string>()
+
                 if (bareImportRE.test(specifier)) {
                     debug(path.join(configContext.root, configContext.cacheDir, specifier))
+                    const url = path.join(configContext.root, configContext.cacheDir, specifier + '.js')
                     s.overwrite(
                         start,
                         end,
-                        path.join(configContext.root, configContext.cacheDir, specifier + '.js') 
+                        url 
                     )
+                    importedUrls.add(url)
                 } else if (specifier) {
                     const resolved = await this.resolve(specifier, importer)
                     if (resolved) {
                         s.overwrite(start, end, markExplicitImport(resolved))
+                        importedUrls.add(resolved)
                     }
                 }
+
+                moduleGraph.updateModuleInfo(importerModule, importedUrls)
             }
 
             s.prepend()
