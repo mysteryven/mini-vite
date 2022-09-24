@@ -11,6 +11,8 @@ import { servePublicMiddleware, serveStaticMiddleware } from './middlewares/stat
 import { initDepsOptimizer } from '../optimizer/optimizer';
 import { ModuleGraph } from './moduleGraph';
 import { createWebSocketServer } from './ws';
+import { normalizePath } from '../utils';
+import { handleHMRUpdate } from '../hmr';
 
 export interface ViteDevServer {
     config: ResolvedConfig,
@@ -58,6 +60,11 @@ export async function createServer() {
         watcher,
         ws: createWebSocketServer()
     }
+
+    watcher.on('change', async (file) => {
+        file = normalizePath(file)
+        await handleHMRUpdate(file, server)
+    })
 
     server.transformIndexHtml = createDevHtmlTransformFn(server)
 
