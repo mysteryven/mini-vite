@@ -8,7 +8,7 @@
 - [x] Support JS, TS, JSX, TSX, CSS, static files.
 - [x] Support `public` as public directory.
 - [x] Dependency Pre-Bundling. 
-- [ ] Hot Module Replacement. (working in progress)
+- [ ] Hot Module Replacement. (working in progress 30%)
 - [ ] Load local config file.
 - [ ] Read ENV from `.env.*`.
 
