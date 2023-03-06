@@ -12,8 +12,6 @@
 - [ ] Load local config file.
 - [ ] Read ENV from `.env.*`.
 
-I will finish this rest of features soon.   
-
 ## Preview
 
 ```bash
