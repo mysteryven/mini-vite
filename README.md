@@ -1,6 +1,6 @@
 # Mini Vite
 
-[中文](./README-CN.md)  
+Just a repo for learn Vite.
 
 ## Features
 
@@ -27,7 +27,3 @@ cd packages/demo && pnpm dev
 ```bash
 cd packages/mini-vite && pnpm build:watch
 ```
-
-## License
-
-[MIT](https://github.com/ShenQingchuan/tsc-err-dirs/blob/main/LICENSE) License © 2022 [mysteryven](https://github.com/mysteryven)
